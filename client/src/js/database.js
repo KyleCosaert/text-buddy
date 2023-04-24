@@ -12,26 +12,22 @@ const initdb = async () =>
     },
   });
 
-
 export const putDb = async (content) => {
-  console.log('PUT to the database');
-  const jateDb = await openDB('jate', 1);
-  const tx = jateDb.transaction('jate', 'readwrite');
+  const todosDb = await openDB('jate', 1);
+  const tx = todosDb.transaction('jate', 'readwrite');
   const store = tx.objectStore('jate');
-  const request = store.put({ id: 1, value: content });
+  const request = store.add({ id: 1, value: content });
   const result = await request;
-   console.log('result.value', result);
-};
+}
 
 export const getDb = async () => {
-  console.log('GET from the database');
-  const jateDb = await openDB('jate', 1);
-  const tx = jateDb.transaction('jate', 'readonly');
+  const todosDb = await openDB('jate', 1);
+  const tx = todosDb.transaction('jate', 'readonly');
   const store = tx.objectStore('jate');
   const request = store.getAll();
   const result = await request;
-  console.log('result.value', result);
   return result.value;
-};
+
+}
 
 initdb();
